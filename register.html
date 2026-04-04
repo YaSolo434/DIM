@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIM - Qeydiyyat</title>
+    <link rel="stylesheet" href="DIM.css">
+    <link rel="stylesheet" href="register.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo_and_menu">
+            <div class="logo" onclick="window.location.href='DIM.html'">
+                <img src="dim logo.png" alt="Logo">
+            </div>
+            <div class="logo-text">Azərbaycan Respublikasının Dövlət <br>İmtahan Mərkəzi</div>
+        </div>
+        <div class="menu">
+            <div class="element"><a href="DIM.html">
+                    <p>BAŞ SƏHİFƏ</p>
+                </a></div>
+            <div class="element">
+                <p>MƏRKƏZ</p>
+            </div>
+            <div class="element">
+                <p>SƏNƏDLƏR</p>
+            </div>
+            <div class="element">
+                <p>XİDMƏTLƏR</p>
+            </div>
+            <div class="element">
+                <p>ƏLAQƏ</p>
+            </div>
+        </div>
+        <div class="navbar">
+            <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
+        </div>
+        <div class="side-menu" id="sideMenu">
+            <ul>
+                <li><a href="DIM.html">Ana Səhifə</a></li>
+                <li><a href="#">Haqqımızda</a></li>
+                <li><a href="#">Xidmətlər</a></li>
+                <li><a href="#">Əlaqə</a></li>
+                <li><a href="#">Mətbuat</a></li>
+                <li><a href="#">Sənədlər</a></li>
+                <li><a href="login.html">Giriş</a></li>
+                <li><a href="register.html">Qeydiyyat</a></li>
+            </ul>
+        </div>
+        <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+    </header>
+
+    <div class="page-content">
+        <div class="form-card">
+            <h2>Qeydiyyat</h2>
+            <p class="subtitle">Yeni hesab yaradın</p>
+
+            <form id="registerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">Ad</label>
+                        <input type="text" id="firstName" placeholder="Adınız" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Soyad</label>
+                        <input type="text" id="lastName" placeholder="Soyadınız" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-poçt</label>
+                    <input type="email" id="email" placeholder="example@mail.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Şifrə</label>
+                    <input type="password" id="password" placeholder="Minimum 8 simvol" required minlength="8">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Şifrəni təsdiqləyin</label>
+                    <input type="password" id="confirmPassword" placeholder="Şifrəni yenidən daxil edin" required>
+                </div>
+                <button type="submit" class="submit-btn" id="registerBtn" disabled>Qeydiyyatdan keç</button>
+            </form>
+
+            <div class="switch-link">
+                Artıq hesabınız var? <a href="login.html">Daxil olun</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="register.js"></script>
+</body>
+
+</html>

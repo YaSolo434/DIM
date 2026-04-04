@@ -1,0 +1,347 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+.menu {
+    display: block;
+    flex-direction: column;
+    margin-top: 3%;
+    margin-left: 3%;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+    margin: 15px;
+    cursor: pointer;
+}
+
+.image-container :hover {
+    opacity: 80%;
+}
+
+.image-container img {
+    width: 100%;
+    min-width: 100px;
+    display: block;
+}
+
+.text-overlay {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 12px;
+    color: #222;
+    background: rgba(255, 255, 255, 1);
+    line-height: 18px;
+    padding: 5px 7px;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-weight: bold;
+}
+
+.title {
+    position: absolute;
+    text-align: left;
+    
+    bottom: 20px;
+    color: white;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 15px;
+    padding: 10px;
+}
+
+.header {
+    border: 2px solid rgb(219, 219, 219);
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+}
+
+.logo_and_menu {
+    margin-left: 280px;
+}
+
+.logo {
+    position: relative;
+    display: inline-block;
+}
+
+.logo :hover {
+    opacity: 80%;
+    cursor: pointer;
+}
+
+.logo img {
+    padding: 12px;
+    padding-left: 15px;
+    padding-bottom: 0px;
+    min-height: 75px;
+    min-width: 105px;
+    width: 35%;
+}
+
+.logo-text {
+    padding: 15px;
+    padding-bottom: 0px;
+    display: inline;
+    position: absolute;
+    top: 20px;
+    left: 400px;
+    font-size: 16px;
+    font-weight: lighter;
+}
+
+.menu {
+    display: inline-flex;
+    position: absolute;
+    flex-direction: row;
+    align-content: space-between 150px;
+    top: -24px;
+    left: 750px;
+}
+
+.element {
+    font-weight: bold;
+    margin-right: 25px;
+}
+
+.element a {
+    text-decoration: none;
+    color: black;
+}
+
+.element a:hover {
+    text-decoration: underline;
+}
+
+.auth-buttons {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    display: flex;
+    gap: 10px;
+}
+
+.auth-buttons a {
+    padding: 8px 20px;
+    
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-login {
+    background-color: #154a9f;
+    color: white;
+    border: 2px solid #154a9f;
+}
+
+.btn-register {
+    background-color: white;
+    color: #154a9f;
+    border: 2px solid #154a9f;
+}
+
+.btn-login:hover {
+    background-color: #154a9f;
+}
+
+.btn-register:hover {
+    background-color: #eaf0fb;
+}
+
+.otk {
+    display: flex;
+    min-width: 900px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.otk :hover {
+    opacity: 80%;
+    cursor: pointer;
+}
+
+.content {
+    background-color: rgba(227, 233, 234, .95);
+}
+
+.blocks {
+    max-width: 1200px;
+    min-width: 300px;
+    margin: 0 auto;
+    padding: 24px;
+    text-align: center;
+}
+
+.hamburger-btn {
+    position: absolute;
+    visibility: hidden;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+}
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 40%;
+    height: 100%;
+    background-color: white;
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    transition: left 0.3s ease;
+    z-index: 1001;
+}
+
+.side-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.side-menu ul li {
+    margin: 20px 0;
+    margin-bottom: 50px;
+}
+
+.side-menu ul li a {
+    color: black;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.side-menu ul li a:hover {
+    text-decoration: underline;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    
+    z-index: 1000;
+}
+
+.side-menu.active {
+    left: 0;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+
+@media (max-width: 500px) {
+    .side-menu {
+        width: 80%;
+        left: -100%;
+    }
+
+    .side-menu.active {
+        left: 0;
+    }
+}
+
+@media (max-width: 950px) {
+    .logo-text {
+        display: none;
+    }
+
+    .otk {
+        display: none;
+    }
+
+    .menu {
+        display: none;
+    }
+
+    .hamburger-btn {
+        visibility: visible;
+    }
+
+    .auth-buttons {
+        top: 8px;
+        right: 10px;
+    }
+
+    .auth-buttons a {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .logo img {
+        padding: 0px;
+        padding-left: 0px;
+        padding-bottom: 0px;
+        width: 45%;
+    }
+
+    .logo_and_menu {
+        text-align: center;
+        margin-left: 0px;
+    }
+
+    
+    .image-container {
+        min-width: 90%;
+    }
+}
+
+@media (max-width: 700px) {
+    .title {
+        margin-top: 30%;
+        font-size: large;
+    }
+}
+
+@media (max-width: 600px) {
+    .title {
+        margin-top: 20%;
+        font-size: large;
+    }
+
+    .image-container {
+        min-width: 90%;
+    }
+}
+
+@media (max-width: 500px) {
+    .title {
+        margin-top: 10%;
+        font-size: large;
+    }
+
+    .image-container {
+        min-width: 90%;
+    }
+}
+
+@media (max-width: 400px) {
+    .title {
+        margin-top: 0%;
+        font-size: large;
+    }
+
+    .image-container {
+        min-width: 90%;
+    }
+}

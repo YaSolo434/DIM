@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="DIM.css">
+    <title>DIM</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .menu {
+            display: block;
+            flex-direction: column;
+            margin-top: 3%;
+            margin-left: 3%;
+        }
+
+        .image-container {
+            position: relative;
+            display: inline-block;
+            margin: 15px;
+            cursor: pointer;
+        }
+
+        .image-container :hover {
+            opacity: 80%;
+        }
+
+        .image-container img {
+            width: 100%;
+            min-width: 100px;
+            display: block;
+        }
+
+        .text-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 12px;
+            color: #222;
+            background: rgba(255, 255, 255, 1);
+            line-height: 18px;
+            padding: 5px 7px;
+            font-family: "Open Sans", Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        .title {
+            position: absolute;
+            text-align: left;
+            /* top: 90px; */
+            bottom: 20px;
+            color: white;
+            font-family: "Open Sans", Arial, sans-serif;
+            font-size: 15px;
+            padding: 10px;
+        }
+
+        .header {
+            border: 2px solid rgb(219, 219, 219);
+            border-right: none;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .logo_and_menu {
+            margin-left: 280px;
+        }
+
+        .logo {
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo :hover {
+            opacity: 80%;
+            cursor: pointer;
+        }
+
+        .logo img {
+            padding: 12px;
+            padding-left: 15px;
+            padding-bottom: 0px;
+            min-height: 75px;
+            min-width: 105px;
+            width: 35%;
+        }
+
+        .logo-text {
+            padding: 15px;
+            padding-bottom: 0px;
+            display: inline;
+            position: absolute;
+            top: 20px;
+            left: 400px;
+            font-size: 16px;
+            font-weight: lighter;
+        }
+
+        .menu {
+            display: inline-flex;
+            position: absolute;
+            flex-direction: row;
+            align-content: space-between 150px;
+            top: -24px;
+            left: 750px;
+        }
+
+        .element {
+            font-weight: bold;
+            margin-right: 25px;
+        }
+
+        .element a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .element a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-buttons {
+            position: absolute;
+            top: 10px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-buttons a {
+            padding: 8px 20px;
+            /* border-radius removed */
+            font-size: 13px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-login {
+            background-color: #154a9f;
+            color: white;
+            border: 2px solid #154a9f;
+        }
+
+        .btn-register {
+            background-color: white;
+            color: #154a9f;
+            border: 2px solid #154a9f;
+        }
+
+        .btn-login:hover {
+            background-color: #154a9f;
+        }
+
+        .btn-register:hover {
+            background-color: #eaf0fb;
+        }
+
+        .otk {
+            display: flex;
+            min-width: 900px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .otk :hover {
+            opacity: 80%;
+            cursor: pointer;
+        }
+
+        .content {
+            background-color: rgba(227, 233, 234, .95);
+        }
+
+        .blocks {
+            max-width: 1200px;
+            min-width: 300px;
+            margin: 0 auto;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .hamburger-btn {
+            position: absolute;
+            visibility: hidden;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            background: none;
+            border: none;
+            color: black;
+            cursor: pointer;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 40%;
+            height: 100%;
+            background-color: white;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+            transition: left 0.3s ease;
+            z-index: 1001;
+        }
+
+        .side-menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .side-menu ul li {
+            margin: 20px 0;
+            margin-bottom: 50px;
+        }
+
+        .side-menu ul li a {
+            color: black;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .side-menu ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(5px);
+            background-color: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            /* transition removed */
+            z-index: 1000;
+        }
+
+        .side-menu.active {
+            left: 0;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+
+
+        @media (max-width: 500px) {
+            .side-menu {
+                width: 80%;
+                left: -100%;
+            }
+
+            .side-menu.active {
+                left: 0;
+            }
+
+            .news-section {
+                grid-template-columns: repeat(1, 1fr);
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 950px) {
+            .logo-text {
+                display: none;
+            }
+
+            .otk {
+                display: none;
+            }
+
+            .menu {
+                display: none;
+            }
+
+            .hamburger-btn {
+                visibility: visible;
+            }
+
+            .auth-buttons {
+                top: 8px;
+                right: 10px;
+            }
+
+            .auth-buttons a {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .logo img {
+                padding: 0px;
+                padding-left: 0px;
+                padding-bottom: 0px;
+                width: 45%;
+            }
+
+            .logo_and_menu {
+                text-align: center;
+                margin-left: 0px;
+            }
+
+            .news-section {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 32px 15px;
+            }
+
+            .image-container {
+                min-width: 90%;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .title {
+                margin-top: 30%;
+                font-size: large;
+            }
+
+            .news-section {
+                grid-template-columns: repeat(1, 1fr);
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .title {
+                margin-top: 20%;
+                font-size: large;
+            }
+
+            .image-container {
+                min-width: 90%;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .title {
+                margin-top: 10%;
+                font-size: large;
+            }
+
+            .image-container {
+                min-width: 90%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .title {
+                margin-top: 0%;
+                font-size: large;
+            }
+
+            .image-container {
+                min-width: 90%;
+            }
+        }
+
+        .news-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 983px;
+            margin-inline: auto;
+            padding-block: 32px;
+        }
+
+        .news {
+            box-shadow: 0px 0px 0px 1px #f5f5f5;
+            transition:
+                box-shadow ease 0.1s,
+                border-color ease 0.1s;
+
+            &:hover {
+                box-shadow: 0 0 27px 0 rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        .news-image {
+            cursor: pointer;
+
+            &:hover {
+                animation: fadeIn 0.3s ease-in-out;
+            }
+
+            img {
+                width: 100%;
+                height: 150px;
+                object-fit: cover;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0.67;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .news-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 24px;
+        }
+
+        .news-time {
+            color: gray;
+            font-size: 12px;
+        }
+
+        .news-description {
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            color: black;
+
+            &:hover {
+                color: #007bff;
+            }
+        }
+
+        .news-tags {
+            background-color: #f0f0f0;
+            padding: 4px 8px;
+            font-size: 11px;
+            width: fit-content;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #f7f9fa;
+            color: #333;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 40px 15%;
+            font-family: "Open Sans", Arial, sans-serif;
+            border-top: 1px solid #ddd;
+        }
+
+        .footer-column {
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+            min-width: 150px;
+        }
+
+        .footer-column.contact-info {
+            min-width: 300px;
+            max-width: 400px;
+        }
+
+        .footer-column h3 {
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #154a9f;
+        }
+
+        .footer-column a {
+            color: #555;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .footer-column a:hover {
+            text-decoration: underline;
+            color: #154a9f;
+        }
+
+        .footer-column p {
+            font-size: 13px;
+            margin: 5px 0;
+            line-height: 1.5;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body class="body">
+    <header class="header">
+        <div class="logo_and_menu">
+            <div class="logo">
+                <img src="dim logo.png" alt="Logo">
+            </div>
+            <div class="logo-text">Azərbaycan Respublikasının Dövlət <br>İmtahan Mərkəzi</div>
+        </div>
+        <div class="menu">
+            <div class="element">
+                <p>BAŞ SƏHİFƏ</p>
+            </div>
+            <div class="element">
+                <p>MƏRKƏZ</p>
+            </div>
+            <div class="element">
+                <p>SƏNƏDLƏR</p>
+            </div>
+            <div class="element">
+                <p>XİDMƏTLƏR</p>
+            </div>
+            <div class="element">
+                <p>ƏLAQƏ</p>
+            </div>
+        </div>
+        <div class="otk">
+            <img src="otk-sinaq.png" alt="Otk Sinaq">
+        </div>
+        <div class="auth-buttons">
+            <a href="login.html" class="btn-login">Giriş</a>
+            <a href="register.html" class="btn-register">Qeydiyyat</a>
+        </div>
+        <div class="navbar">
+            <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
+        </div>
+
+        <div class="side-menu" id="sideMenu">
+            <ul>
+                <li><a href="#">Ana Səhifə</a></li>
+                <li><a href="#">Haqqımızda</a></li>
+                <li><a href="#">Xidmətlər</a></li>
+                <li><a href="#">Əlaqə</a></li>
+                <li><a href="#">Mətbuat</a></li>
+                <li><a href="#">Sənədlər</a></li>
+                <li><a href="login.html">Giriş</a></li>
+                <li><a href="register.html">Qeydiyyat</a></li>
+            </ul>
+        </div>
+
+        <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+    </header>
+    <div class="content">
+        <div class="blocks">
+            <div class="image-container">
+                <img src="ehe.png" alt="Background Image" class="image">
+                <div class="text-overlay">Yekun qiymətləndirmə</div>
+                <div class="title" style="padding-top: 45px;">İmtahana buraxılış vərəqəsi (şagirdlər üçün, 6 və 13
+                    aprel)</div>
+            </div>
+            <div class="image-container">
+                <img src="download.png" alt="Background Image" class="image">
+                <div class="text-overlay">İmtahana qeydiyyat</div>
+                <div class="title" style="padding-top: 45px;">Qiymətləndirmə fəaliyyəti ilə məşğul olmaq üçün ixtisas
+                    imtahanı</div>
+            </div>
+            <div class="image-container">
+                <img src="ehe.png" alt="Background Image" class="image">
+                <div class="text-overlay">Aqrar sığorta</div>
+                <div class="title" style="padding-top: 55px; padding-left: 15px;">İmtahana buraxılış vərəqəsi</div>
+            </div>
+            <div class="image-container">
+                <img src="download.png" alt="Background Image" class="image">
+                <div class="text-overlay">Magistratura</div>
+                <div class="title" style="padding-top: 55px; padding-left: 15px;">Bakalavrın elektron ərizəsi</div>
+            </div>
+            <div class="image-container">
+                <img src="ehe.png" alt="Background Image" class="image">
+                <div class="text-overlay">Bakalavriat</div>
+                <div class="title" style="padding-top: 35px;">İmtahana buraxılış vərəqəsi (əvvəlki ilin məzunları,
+                    xarici dili dəyişən cari ilin məzunları üçün)</div>
+            </div>
+
+            <div class="image-container">
+                <img src="ehe.png" alt="Background Image" class="image">
+                <div class="text-overlay">Dövlət qulluğu</div>
+                <div class="title" style="padding-top: 40px;">BB vəzifə altqrupu və dövlət qulluğunda fəaliyyətin davam
+                    etdirilməsi üzrə imtahana buraxılış vərəqəsi</div>
+            </div>
+            <div class="image-container">
+                <img src="download.png" alt="Background Image" class="image">
+                <div class="text-overlay">ADSI</div>
+                <div class="title" style="padding-top: 45px;">Azərbaycan Dili üzrə Sertifikasiya İmtahanının sınaq
+                    versiyası</div>
+            </div>
+            <div class="image-container">
+                <img src="exam-time.png" alt="Background Image" class="image">
+                <div class="text-overlay">İmtahan cədvəli</div>
+                <div class="title" style="padding-top: 45px;">2025-ci ildə keçiriləcək imtahanlar və qeydiyyat tarixləri
+                    haqqında məlumat</div>
+            </div>
+            <div class="image-container">
+                <img src="download.png" alt="Background Image" class="image">
+                <div class="text-overlay">İmtahana qeydiyyat</div>
+                <div class="title" style="padding-top: 35px;">Taksi sürücülərinin imtahanında iştirak etmək üçün ödəniş
+                    və qeydiyyat sistemi</div>
+            </div>
+            <div class="image-container">
+                <img src="info.png" alt="Background Image" class="image">
+                <div class="text-overlay">Məsləhət xidməti</div>
+                <div class="title" style="padding-top: 50px;">Abituriyent Məsləhət Mərkəzi</div>
+            </div>
+            <div class="image-container">
+                <img src="download.png" alt="Background Image" class="image">
+                <div class="text-overlay">Kurikulum</div>
+                <div class="title" style="padding-top: 45px;">Hazırlıq kurslarında iştirak etmək üçün qeydiyyat</div>
+            </div>
+            <div class="image-container">
+                <img src="info.png" alt="Background Image" class="image">
+                <div class="text-overlay">Elektron imtahanlar</div>
+                <div class="title" style="padding-top: 45px;">Elektron imtahanlara buraxılış vərəqələri və nəticələrin
+                    çapı</div>
+            </div>
+        </div>
+    </div>
+    <div class="news-section">
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>MƏRKƏZ</h3>
+            <a href="#">Ümumi məlumat</a>
+            <a href="#">İdarəetmə orqanları</a>
+            <a href="#">Struktur</a>
+            <a href="#">Regional bölmələr</a>
+            <a href="#">Beynəlxalq əməkdaşlıq</a>
+            <a href="#">Hesabatlar</a>
+            <a href="#">Vakansiyalar</a>
+            <a href="#">Açıq məlumatlar</a>
+        </div>
+        <div class="footer-column">
+            <h3>FƏALİYYƏT</h3>
+            <a href="#">Qəbul və imtahanlar</a>
+            <a href="#">Dövlət qulluğu</a>
+            <a href="#">Tədqiqat</a>
+            <a href="#">Digər fəaliyyət</a>
+        </div>
+        <div class="footer-column">
+            <h3>MƏTBUAT</h3>
+            <a href="#">Xəbərlər</a>
+            <a href="#">Media təqib</a>
+            <a href="#">Multimedia</a>
+            <a href="#">Mətbuat xidməti</a>
+        </div>
+        <div class="footer-column">
+            <h3>XİDMƏTLƏR</h3>
+            <a href="#">E-XİDMƏTLƏR</a>
+            <a href="#">DÖVLƏT XİDMƏTLƏRİ</a>
+        </div>
+        <div class="footer-column">
+            <h3>ƏLAQƏ</h3>
+            <a href="#">Əlaqə məlumatları</a>
+            <a href="#">Online müraciət</a>
+            <a href="#">Sual - cavab</a>
+            <a href="#">Vətəndaşların qəbulu</a>
+        </div>
+        <div class="footer-column contact-info">
+            <h3>Əlaqə məlumatları</h3>
+            <p><strong>1653</strong></p>
+            <p><strong>info@dim.gov.az</strong></p>
+            <p>AZ1022, Bakı şəhəri, Nəsimi rayonu, Akademik Həsən Əliyev küçəsi, 299.<br>Mərkəzə gələn avtobus
+                marşrut
+                nömrələri: 6, 13, 33, 38, 61, 83</p>
+            <p>AZ1116, Bakı şəhəri, Binəqədi rayonu, Süleyman Sani Axundov küçəsi, 50.<br>Elektron imtahanlar
+                korpusu.
+                Avtobus marşrut nömrələri: 2, 33</p>
+        </div>
+    </footer>
+
+    <script src="ehee.js"></script>
+    <script>
+        function toggleMenu() {
+            let sideMenu = document.getElementById('sideMenu');
+            let overlay = document.getElementById('overlay');
+
+            sideMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>
