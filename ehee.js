@@ -10,14 +10,12 @@ const API_KEY = '4e2b3e8856a14eb296393cda20cddf0b';
 
 const newsSection = document.querySelector('.news-section');
 
-let articles = [];
 
 async function fetchNews() {
     const response = await fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
     const data = await response.json();
-    console.log(data);
 
-    articles = data.articles.splice(0, 8);
+    const articles = data.articles.splice(0, 8);
     newsSection.innerHTML = articles.map(article => `
         <div class="news">
             <div class="news-image">
@@ -34,26 +32,75 @@ async function fetchNews() {
 
 fetchNews();
 
+async function searchBooks() {
+    const searchInput = document.getElementById('bookSearchInput');
+    const resultsContainer = document.getElementById('bookSearchResults');
+    const title = searchInput ? searchInput.value.trim() : '';
 
+    if (!title) {
+        resultsContainer.innerHTML = '<span style="color: red; text-align: center;">Məlumat daxil edin! (Please enter a search term)</span>';
+        return;
+    }
+
+    resultsContainer.innerHTML = '<span style="color: gray; text-align: center;">Yüklənir... (Loading...)</span>';
+
+    try {
+        const response = await fetch(`http://localhost:5000/api/books/search-books?title=${encodeURIComponent(title)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+
+        if (response.status === 404) {
+            resultsContainer.innerHTML = `<span style="color: gray; text-align: center;">${data.message}</span>
+            `
+            return;
+        }
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            resultsContainer.innerHTML = `<span style="color: red; text-align: center;">Xəta (Error): ${errorText}</span>`;
+            return;
+        }
+
+
+        resultsContainer.innerHTML = data.map(book => `
+            <div style="padding: 15px; border: 1px solid #ddd; background: white; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <strong style="font-size: 16px; color: #154a9f;">${book.title}</strong>
+                <div style="font-size: 13px; color: #555; margin-top: 8px;">
+                    ${book.author ? `Müəllif: ${book.author}` : ''}
+                    ${book.published_year ? `<br>İl: ${book.published_year}` : ''}
+                </div>
+            </div>
+        `).join('');
+
+    } catch (err) {
+        console.error('Error fetching books:', err);
+        resultsContainer.innerHTML = '<span style="color: red; text-align: center;">Serverə qoşularkən xəta baş verdi. (Server connection error.)</span>';
+    }
+}
 
 async function checkAuth() {
     try {
         const response = await fetch('http://localhost:5000/api/auth/me', {
             method: 'GET',
-            credentials: 'include' 
+            credentials: 'include'
         });
 
         if (!response.ok) {
-            
+
             window.location.href = 'login.html';
             return;
         }
 
-        
+
         const user = await response.json();
         console.log('Authenticated User:', user);
 
-        
+
         const authButtons = document.querySelector('.auth-buttons');
         if (authButtons) {
             authButtons.innerHTML = `
@@ -80,7 +127,7 @@ async function logout() {
             credentials: 'include'
         });
 
-        
+
         window.location.href = 'login.html';
     } catch (err) {
         console.error('Error logging out', err);

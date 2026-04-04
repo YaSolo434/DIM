@@ -547,6 +547,22 @@
         <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
     </header>
     <div class="content">
+
+        <div class="book-search-container"
+            style="text-align: center; padding: 40px 20px; background: white; margin-bottom: 20px; border-bottom: 1px solid #ddd;">
+            <h2 style="color: #154a9f; font-family: 'Open Sans', Arial, sans-serif;">Kitab Axtarışı</h2>
+            <p style="font-size: 14px; color: #666; margin-top: 5px;">Kitabxanamızda mövcud olan kitabları axtarın</p>
+            <div style="display: flex; justify-content: center; gap: 10px; margin-top: 15px;">
+                <input type="text" id="bookSearchInput" placeholder="Kitabın adı..."
+                    style="padding: 10px 15px; width: 100%; max-width: 400px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px;">
+                <button onclick="searchBooks()"
+                    style="padding: 10px 25px; background: #154a9f; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 15px; font-weight: bold;">Axtar</button>
+            </div>
+            <div id="bookSearchResults"
+                style="margin-top: 25px; display: flex; flex-direction: column; gap: 10px; max-width: 600px; margin-inline: auto; text-align: left;">
+            </div>
+        </div>
+
         <div class="blocks">
             <div class="image-container">
                 <img src="ehe.png" alt="Background Image" class="image">
@@ -622,7 +638,7 @@
     <div class="news-section">
     </div>
 
-    
+
     <footer class="footer">
         <div class="footer-column">
             <h3>MƏRKƏZ</h3>

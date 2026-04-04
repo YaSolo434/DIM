@@ -45,7 +45,7 @@
 .title {
     position: absolute;
     text-align: left;
-    
+
     bottom: 20px;
     color: white;
     font-family: "Open Sans", Arial, sans-serif;
@@ -127,7 +127,7 @@
 
 .auth-buttons a {
     padding: 8px 20px;
-    
+
     font-size: 13px;
     font-weight: bold;
     text-decoration: none;
@@ -235,7 +235,7 @@
     background-color: rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;
-    
+
     z-index: 1000;
 }
 
@@ -300,7 +300,7 @@
         margin-left: 0px;
     }
 
-    
+
     .image-container {
         min-width: 90%;
     }

@@ -4,14 +4,15 @@ const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
+const bookRoutes = require('./routes/books');
 const app = express();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 
 const corsOptions = {
-    origin: ['http://127.0.0.1:5500', 'http://localhost:5500', 'http://127.0.0.1:3000', 'http://localhost:3000'], 
-    credentials: true, 
+    origin: ['http://127.0.0.1:5500', 'http://localhost:5500', 'http://127.0.0.1:3000', 'http://localhost:3000'],
+    credentials: true,
 };
 
 
@@ -21,7 +22,7 @@ app.use(cookieParser());
 
 
 app.use('/api/auth', authRoutes);
-
+app.use('/api/books', bookRoutes);
 
 app.get('/', (req, res) => {
     res.send('DIM API is running...');

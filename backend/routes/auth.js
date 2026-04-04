@@ -1,5 +1,4 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../db');
 const verifyToken = require('../middleware/authMiddleware');
@@ -7,12 +6,12 @@ const verifyToken = require('../middleware/authMiddleware');
 const router = express.Router();
 require('dotenv').config();
 
-
+// Registration route
 router.post('/register', async (req, res) => {
     const { first_name, last_name, email, password } = req.body;
 
     try {
-        
+        // Check if user already exists
         const userExists = await pool.query(
             'SELECT * FROM users WHERE email = $1',
             [email]
@@ -22,14 +21,10 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        
+        // Insert the user into DB with password
         const newUser = await pool.query(
             'INSERT INTO users (first_name, last_name, email, password_hash) VALUES ($1, $2, $3, $4) RETURNING id, first_name, last_name, email',
-            [first_name, last_name, email, hashedPassword]
+            [first_name, last_name, email, password]
         );
 
         res.status(201).json({ message: 'User registered successfully', user: newUser.rows[0] });
@@ -40,12 +35,12 @@ router.post('/register', async (req, res) => {
     }
 });
 
-
+// Login route
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        
+        // Verify User Exists
         const userQuery = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
         const user = userQuery.rows[0];
 
@@ -53,28 +48,28 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
 
-        
-        const isMatch = await bcrypt.compare(password, user.password_hash);
+        // Check password matching (Plaintext comparison since encryption is removed)
+        const isMatch = (password === user.password_hash);
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
 
-        
+        // Create JWT Payload
         const payload = {
             id: user.id,
             first_name: user.first_name,
             last_name: user.last_name
         };
 
-        
-        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+        // Sign Token
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '14d' });
 
-        
+        // Send token mapped in Cookie
         res.cookie('token', token, {
-            httpOnly: true,     
-            secure: true,       
-            sameSite: 'none',   
-            maxAge: 3600000     
+            httpOnly: true,     // Accessible only by the web server
+            secure: true,       // Required for SameSite=None
+            sameSite: 'none',   // Allows cross-site cookie usage
+            maxAge: 3600000     // 1 Hour
         });
 
         res.json({ message: 'Logged in successfully', user: { id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.email } });
@@ -85,7 +80,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-
+// Logout route
 router.post('/logout', (req, res) => {
     res.clearCookie('token', {
         httpOnly: true,
@@ -95,7 +90,7 @@ router.post('/logout', (req, res) => {
     res.json({ message: 'Logged out successfully' });
 });
 
-
+// Example of a Protected Route (requires valid JWT in cookie)
 router.get('/me', verifyToken, async (req, res) => {
     try {
         const userQuery = await pool.query('SELECT id, first_name, last_name, email, created_at FROM users WHERE id = $1', [req.user.id]);
