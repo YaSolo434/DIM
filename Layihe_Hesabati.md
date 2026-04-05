@@ -42,18 +42,26 @@ Saytdakı kitablar (`books.js`) axtarış sistemini nəzərdən keçirək. Əgə
 
 **Zəif (Təhlükəli) Kod Nümunəsi:**
 ```javascript
-// ZƏİF VƏ TƏHLÜKƏLİ KOD
-app.get('/api/books/search', async (req, res) => {
-    const axtarisSozu = req.query.q; 
-    
-    // İstifadəçi məlumatı birbaşa SQL mətni daxilinə yazılır!
-    const query = `SELECT * FROM books WHERE title LIKE '%${axtarisSozu}%'`;
-    
+// SEARCH ROUTE (Vulnerable to SQL Injection)
+router.get('/search-books', async (req, res) => {
+    // We get the search term from the URL query: /search-books?title=...
+    const { title } = req.query;
+
     try {
-        const result = await pool.query(query);
-        res.json(result.rows);
+        const queryText = `SELECT * FROM books WHERE title LIKE '%${title}%'`;
+
+        console.log("Executing SQL:", queryText);
+
+        const result = await pool.query(queryText);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: "No books found." });
+        }
+
+        return res.status(200).json(result.rows);
     } catch (err) {
-        console.error(err);
+        console.error(err.message);
+        return res.status(500).send(`Database Error: ${err.message}`);
     }
 });
 ```

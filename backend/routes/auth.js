@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
             httpOnly: true,     // Accessible only by the web server
             secure: true,       // Required for SameSite=None
             sameSite: 'none',   // Allows cross-site cookie usage
-            maxAge: 3600000     // 1 Hour
+            maxAge: 14 * 24 * 60 * 60 * 1000     // 14 Days
         });
 
         res.json({ message: 'Logged in successfully', user: { id: user.id, first_name: user.first_name, last_name: user.last_name, email: user.email } });
