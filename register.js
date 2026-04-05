@@ -7,20 +7,20 @@ const registerForm = document.getElementById('registerForm');
 const registerButton = document.getElementById('registerBtn');
 
 registerForm.addEventListener('input', () => {
-    
+
     const passwordsMatch = password.value === confirm_password.value;
 
-    
+
     const allFieldsFilled = first_name.value.trim() !== "" &&
         last_name.value.trim() !== "" &&
         email.value.trim() !== "" &&
         password.value.trim() !== "" &&
         confirm_password.value.trim() !== "";
 
-    
+
     const isFormValid = registerForm.checkValidity();
 
-    
+
     registerButton.disabled = !passwordsMatch || !allFieldsFilled || !isFormValid;
 });
 
@@ -44,11 +44,11 @@ async function register() {
     console.log(data);
 
     if (response.ok) {
-        
+
         alert('Registration successful! Please log in.');
         window.location.href = 'login.html';
     } else {
-        
+
         alert(data.message || 'Registration failed');
     }
 }

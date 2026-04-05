@@ -82,10 +82,11 @@ body {
     font-size: 15px;
     font-weight: bold;
     cursor: pointer;
-}
 
-.submit-btn:hover {
-    background-color: #154a9f;
+    &:disabled {
+        cursor: not-allowed;
+        background-color: #999;
+    }
 }
 
 .switch-link {

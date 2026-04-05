@@ -1,6 +1,16 @@
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const loginForm = document.getElementById('loginForm');
+const loginButton = document.getElementById('loginBtn');
+
+loginForm.addEventListener('input', () => {
+    const allFieldsFilled = email.value.trim() !== "" &&
+        password.value.trim() !== "";
+
+    const isFormValid = loginForm.checkValidity();
+
+    loginButton.disabled = !allFieldsFilled || !isFormValid;
+});
 
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -25,10 +35,10 @@ async function login() {
     console.log(data);
 
     if (response.ok) {
-        
+
         window.location.href = 'DIM.html';
     } else {
-        
+
         alert(data.message || 'Login failed');
     }
 }
